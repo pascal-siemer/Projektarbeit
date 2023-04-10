@@ -9,7 +9,7 @@ class Game:
     question_index: int
     scores: list[Score]
 
-    def __init__(self):
-        self.questions = []
-        self.question_index = -1
-        self.scores = []
+    def __init__(self, questions: list[Question], scores: list[Score]):
+        self.questions = questions
+        self.question_index = 0
+        self.scores = scores

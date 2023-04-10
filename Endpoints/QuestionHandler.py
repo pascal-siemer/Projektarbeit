@@ -7,7 +7,7 @@ from SQL.QustionMapper import QuestionMapper
 class QuestionHandler(IEndpoint):
 
     def __init__(self, game: Game):
-        self.index = 0
+        self.index = game.question_index
         self.questions = game.questions
 
     async def handle_request(self, message: str) -> Question:
