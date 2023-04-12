@@ -23,6 +23,7 @@ class MSSQLDriver:
                f"Database={database}; " \
                f"Trusted_Connection=yes;"
 
+    # maybe use generics: https://docs.python.org/3/library/typing.html
     def get(self, query: str, mapper: ISqlDataMapper) -> list[Any]:
         with self.connection.cursor() as cursor:
             cursor.execute(query)
