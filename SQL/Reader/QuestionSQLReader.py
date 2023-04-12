@@ -1,9 +1,9 @@
-from Interfaces.ISQLReader import ISQLReader
-from SQL.MSSQLDriver import MSSQLDriver
-from SQL.QustionMapper import QuestionMapper
+from Interfaces.ISqlDriver import ISqlDriver
+from Interfaces.ISqlReader import ISqlReader
+from SQL.Mapper.QustionMapper import QuestionMapper
 
 
-class QuestionSQLReader(ISQLReader):
+class QuestionSQLReader(ISqlReader):
 
     query = """
             select 
@@ -15,10 +15,10 @@ class QuestionSQLReader(ISQLReader):
                 [Answer3],
                 [IndexCorrect]
             from
-                [dbo].[TestQuestions]
+                [TestQuestions]
             """
 
-    def __init__(self, driver: MSSQLDriver):
+    def __init__(self, driver: ISqlDriver):
         self.driver = driver
 
     def read(self):

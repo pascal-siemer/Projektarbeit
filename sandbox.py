@@ -1,7 +1,5 @@
-from pyodbc import Connection, Cursor, Row #Types
-from pyodbc import connect #Methods
-from SQL.MSSQLDriver import MSSQLDriver
-from SQL.QustionMapper import QuestionMapper
+from SQL.Driver.MssqlDriver import MSSQLDriver
+from SQL.Mapper.QustionMapper import QuestionMapper
 
 driver = MSSQLDriver("localhost", "Gameshow")
 result = driver.get("SELECT * FROM dbo.TestQuestions", QuestionMapper())

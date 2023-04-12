@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
-from SQL.MSSQLDriver import MSSQLDriver
+from SQL.Driver.MssqlDriver import MSSQLDriver
 
 
-class ISQLReader(ABC):
+class ISqlReader(ABC):
 
     @abstractmethod
     def __init__(self, driver: MSSQLDriver):

@@ -9,6 +9,7 @@ import sqlite3
 
 
 class MSSQLDriver:
+
     """
     Implementierung des MSSQL-Drivers nach Microsoft-Empfehlung
     siehe: https://learn.microsoft.com/de-de/sql/connect/python/pyodbc/python-sql-driver-pyodbc?view=sql-server-ver16
@@ -30,15 +31,3 @@ class MSSQLDriver:
         with self.connection.cursor() as cursor:
             cursor.execute(query)
             return mapper.map(cursor)
-
-"""      
-class SQLiteDriver:
-    
-    def __init__(self, file_path: str):
-        self.connection = sqlite.connect(file_path)
-        
-    def get(self, query: str, mapper: ISqlDataMapper) -> list[Any]:
-        cursor = self.connection.cursor()
-        cursor.execute(query)
-        return mapper.map(cursor)
-"""

@@ -1,7 +1,6 @@
 from Definitions.Game import Game
 from Interfaces.IEndpoint import IEndpoint
 from Definitions.Question import Question
-from SQL.QustionMapper import QuestionMapper
 
 
 class QuestionHandler(IEndpoint):
