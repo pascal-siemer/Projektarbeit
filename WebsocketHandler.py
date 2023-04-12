@@ -15,13 +15,15 @@ class WebsocketHandler:
             async with websockets.serve(self.__handle_socket, address, port):
                 await asyncio.Future()  # run forever
 
+    # umbenennen in get?, clients.add auslagern in register_client()
     async def __handle_socket(self, websocket) -> None:
         self.clients.add(websocket)
         async for request in websocket:
             print(f"{request}")
             response = await self.router.handle_request(request)
             await self.__send_response(response)
-
+    
+    # umbenennen in send?
     async def __send_response(self, response: object) -> None:
         response = JsonConverter.deserialize(response)
         tasks = list()
