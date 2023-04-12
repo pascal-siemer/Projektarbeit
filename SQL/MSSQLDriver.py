@@ -4,6 +4,8 @@ from pyodbc import Connection, Cursor, Row
 from pyodbc import connect
 
 from Interfaces.ISqlDataMapper import ISqlDataMapper
+import sqlite3
+
 
 
 class MSSQLDriver:
@@ -28,3 +30,15 @@ class MSSQLDriver:
         with self.connection.cursor() as cursor:
             cursor.execute(query)
             return mapper.map(cursor)
+
+"""      
+class SQLiteDriver:
+    
+    def __init__(self, file_path: str):
+        self.connection = sqlite.connect(file_path)
+        
+    def get(self, query: str, mapper: ISqlDataMapper) -> list[Any]:
+        cursor = self.connection.cursor()
+        cursor.execute(query)
+        return mapper.map(cursor)
+"""
