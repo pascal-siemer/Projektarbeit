@@ -32,3 +32,22 @@ Den vollständigen Quellcode.<br>
 Projektantrag: 12.03.2023 23:59 Uhr<br>
 Deadline für die Abgabe: 23.04.2023 23:59 Uhr<br>
 Viel Erfolg<br>
+
+
+
+----------------------------------------------------------------<br>
+
+Änderungen:
+
+Es gibt kein Prinzip Request/Response bei Websockets. Es gibt nur Messages. -> Objekt Message erstellen und einkommende Nachrichten parsen.
+WebsocketHandler in WebsocketListener, MessageReceiver und MessageSender aufspalten.
+Message-Objects werden dann in die Handler weitergeleitet.
+Die Handler rufen dann MessageSender.send auf, um Daten zu versenden.
+
+Message-Objekt entweder mit Methoden .to_json und .from_json oder Entsprechend Klassen in "Tools" anlegen. (hier gibts schon einen JsonConverter).
+
+
+Ideen:
+Statt dass zu beginn alle Fragen eingelesen werden, können auch nur die IDs der Fragen gelesen werden. Wird dann eine Frage gebraucht, wird diese aus der Datenbank gelesen. Warum? Dadurch kann die Datenbank kleinteiliger aufgebaut werden.
+
+Weitere Ideen:
