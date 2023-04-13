@@ -31,3 +31,47 @@ class WebsocketHandler:
             task = asyncio.create_task(client.send(response))
             tasks.append(task)
         await asyncio.wait(tasks)
+
+        
+"""
+class WebsocketListener:
+    
+    def __init__(self, receiver: MessageReceiver):
+        self.receiver = receiver
+    
+    async def listen(self, address: str, port: int) -> None:
+        while True:
+            async with websockets.serve(, address, port):
+                await asyncio.Future()
+
+    async def handle_message(self, websocket):
+        #clients.add(websocket)
+        async for message in websocket:
+            await self.receiver.receive()
+            #vllt auch direkt an einen EndpointRouter anschließen.
+            #EndointRouter zu MessageRouter umbenennen?
+    
+class MessageReceiver:
+    
+    # überlegen, was mit den clients passieren soll, vllt als Objekt?
+    def __init__(self, router: EndpointRouter):
+        self.router = router
+        
+    async def receive(self, message: str):
+        print(f"{message}")
+        self.router.handle_request(message):
+            
+class MessageSender:
+    
+    def __init__(self, clients: Clients):
+        self.clients = clients
+        
+    async def send(self, message: str):
+        json = JsonConverter.deserialize(message)
+        tasks = list()
+        for client in self.clients:
+            task = asyncio.create_task(client.send(response))
+            tasks.append(task)
+        await asyncio.wait(tasks)
+"""
+
