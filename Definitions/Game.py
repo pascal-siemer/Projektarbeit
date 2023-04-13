@@ -3,6 +3,8 @@ from Definitions.Question import Question
 from Definitions.Score import Score
 
 
+#add round_started: bool
+
 @dataclass
 class Game:
     questions: list[Question]
