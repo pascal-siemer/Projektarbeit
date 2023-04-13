@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+
+from Definitions.Player import Player
 from Definitions.Question import Question
 from Definitions.Score import Score
 
@@ -9,9 +11,9 @@ from Definitions.Score import Score
 class Game:
     questions: list[Question]
     question_index: int
-    scores: list[Score]
+    players: list[Player]
 
-    def __init__(self, questions: list[Question], scores: list[Score]):
-        self.questions = questions
+    def __init__(self):
+        self.questions = []
         self.question_index = 0
-        self.scores = scores
+        self.players = []
