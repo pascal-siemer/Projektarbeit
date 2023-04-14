@@ -18,10 +18,10 @@ class WebsocketListener:
             async with websockets.serve(self.handle_message, address, port):
                 await asyncio.Future()
 
-    async def handle_message(self, websocket):
-        self.add_player_if_new() #hier muss sich was ändern, muss leider pennen.
+    async def handle_message(self, websocket): #hier muss sich was ändern, muss leider pennen.
         async for message in websocket:
-            await self.receiver.receive()
+            message_object = MessageProcessor.create_message_object(message, websocket)
+            await self.receiver.receive(message_object)
             # vllt auch direkt an einen EndpointRouter anschließen.
             # EndointRouter zu MessageRouter umbenennen?
 
