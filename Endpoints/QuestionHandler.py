@@ -5,6 +5,8 @@ from Definitions.Question import Question
 
 class QuestionHandler(IEndpoint):
 
+    identifier: str = "Question"
+    
     def __init__(self, game: Game):
         self.index = game.question_index
         self.questions = game.questions
