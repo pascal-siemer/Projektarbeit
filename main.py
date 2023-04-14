@@ -20,9 +20,9 @@ scores = [Score("peter", 900), Score("brammen", 1500), Score("chris", 1500), Sco
 game = Game(questions, scores)
 
 router = EndpointRouter()
-router.add("Question", QuestionHandler(game))
-router.add("Score", ScoreHandler(game))
-router.add("Round", RoundHandler(game))
+router.add(QuestionHandler.identifier, QuestionHandler(game))
+router.add(ScoreHandler.identifier, ScoreHandler(game))
+router.add(RoundHandler.identifier, RoundHandler(game))
 
 address = "localhost"
 port = 8123
