@@ -9,7 +9,7 @@ class QuestionHandler(IEndpoint):
         self.index = game.question_index
         self.questions = game.questions
 
-    async def handle_request(self, message: str) -> Question:
+    async def handle_request(self, message: Message) -> Question:
         question = await self.__get_question()
         self.__increase_index()
         return question
