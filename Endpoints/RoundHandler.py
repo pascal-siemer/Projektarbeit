@@ -19,6 +19,7 @@ class RoundHandler(IEndpoint):
     async def handle_request(self, message: str) -> object:
         pass
 
+    #Funktionalität vllt in Game-Object implementieren?? game.loop() oder game.start oder sowas halt.
     async def loop(self):
         while True:
             await asyncio.sleep(self.round_timer_in_seconds)
