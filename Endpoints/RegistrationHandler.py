@@ -1,10 +1,11 @@
-class RegistrationHandler:
+class RegistrationHandler(IEndpoint):
     
     def __init__(self, game: Game):
         self.game = game
         
-    def handle_registration(self, message: Message) -> None:
+    def handle_message(self, message: Message) -> None:
         __add_new_player(message)
+        message.socket.send("")
         
     def __add_new_player(message: Message) -> None:
         players = self.game.players
