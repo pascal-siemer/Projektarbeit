@@ -8,8 +8,9 @@ from WebsocketHandler import WebsocketHandler
 
 class RoundHandler(IEndpoint):
 
-    round_timer_in_seconds = 120
-    after_round_timer_in_seconds = 30
+    identifier: str = "Round"
+    round_timer_in_seconds: int = 120
+    after_round_timer_in_seconds: int = 30
 
     def __init__(self, game: Game, websocket: WebsocketHandler):
         self.game = game
