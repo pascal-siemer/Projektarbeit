@@ -5,6 +5,8 @@ from Interfaces.IEndpoint import IEndpoint
 
 class ScoreHandler(IEndpoint):
 
+    identifier: str = "Score"
+    
     def __init__(self, game: Game):
         self.scores = game.scores
 
