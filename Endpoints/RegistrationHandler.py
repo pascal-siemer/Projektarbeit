@@ -5,7 +5,7 @@ class RegistrationHandler(IEndpoint):
         
     def handle_message(self, message: Message) -> None:
         __add_new_player(message)
-        message.socket.send("")
+        #message.websocket.send("") antwort senden
         
     def __add_new_player(message: Message) -> None:
         players = self.game.players
