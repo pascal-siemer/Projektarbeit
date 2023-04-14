@@ -1,7 +1,7 @@
 class MessageSender:
 
-    def __init__(self, clients: Clients):
-        self.clients = clients
+    def __init__(self, game: Game):
+        self.clients = [player.websocket for player in game.players]
 
     async def send(self, message: str):
         json = JsonConverter.deserialize(message)
