@@ -1,5 +1,7 @@
 class RegistrationHandler(IEndpoint):
     
+    identifier: str = "Registration"
+    
     def __init__(self, game: Game):
         self.game = game
         
