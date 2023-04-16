@@ -1,5 +1,7 @@
 import json
 
+from Definitions.Message import Message
+
 
 class JsonConverter:
 
@@ -9,4 +11,5 @@ class JsonConverter:
     
     @staticmethod
     def serialize(message: str, websocket) -> Message:
+        pass
         #message umbauen, neues Tool erstellen, welches die Teile aus Message seperiert.

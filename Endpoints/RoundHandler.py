@@ -12,9 +12,8 @@ class RoundHandler(IEndpoint):
     round_timer_in_seconds: int = 120
     after_round_timer_in_seconds: int = 30
 
-    def __init__(self, game: Game, websocket: WebsocketHandler):
+    def __init__(self, game: Game):
         self.game = game
-        self.websocket = websocket
 
     async def handle_request(self, message: str) -> object:
         pass
