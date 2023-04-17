@@ -1,5 +1,8 @@
 import asyncio
 import websockets
+
+from Definitions.Connection import Connection
+from Definitions.Message import Message
 from Messaging.Endpoints.EndpointRouter import EndpointRouter
 from Tools.JsonConverter import JsonConverter
 
@@ -18,11 +21,29 @@ class WebsocketHandler:
     # umbenennen in get?, clients.add auslagern in register_client()
     async def __handle_socket(self, websocket) -> None:
         self.clients.add(websocket)
-        async for request in websocket:
-            print(f"{request}")
-            response = await self.router.handle_request(request)
-            await self.__send_response(response)
-    
+        async for message_string in websocket:
+            message = JsonConverter.serialize(message_string)
+            print(f"{message}")
+            await self.router.handle_message(message)
+
+
+    async def send(self, connection: Connection, message: Message):
+        json_of_message = JsonConverter.deserialize(message)
+        connection.websocket.send(json_of_message)
+
+    async def send_to_all(self, connections: list[Connection], message: Message):
+
+        tasks = list()
+        for connection in connections:
+            task = asyncio.create_task(self.send(connection, message))
+            tasks.append(task)
+
+        if len(tasks) < 1:
+            return
+
+        await asyncio.wait(task)
+
+
     # umbenennen in send?
     async def __send_response(self, response: object) -> None:
         response = JsonConverter.deserialize(response)

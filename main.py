@@ -1,15 +1,17 @@
-from Definitions.Game import Game
-from Definitions.Score import Score
-from Messaging.Endpoints.EndpointRouter import EndpointRouter
-from Messaging.Endpoints.QuestionHandler import QuestionHandler
-from Messaging.Endpoints.RoundHandler import RoundHandler
-from Messaging.Endpoints.ScoreHandler import ScoreHandler
-from Database.Reader.QuestionSQLReader import QuestionSQLReader
-from Database.Driver.SqliteDriver import SqliteDriver
-from WebsocketHandler import WebsocketHandler
 import asyncio
 
+from Database.Driver.SqliteDriver import SqliteDriver
+from Database.Reader.QuestionSQLReader import QuestionSQLReader
+from Definitions.Game import Game
+from Messaging.Endpoints.EndpointRouter import EndpointRouter
+from Messaging.Endpoints.NextQuestionHandler import NextQuestionHandler
+from Messaging.Endpoints.PlayerHandler import PlayerHandler
+from Messaging.Endpoints.QuestionHandler import QuestionHandler
+from Messaging.MessageReceiver import MessageReceiver
+from Messaging.MessageSender import MessageSender
+from Messaging.WebsocketListener import WebsocketListener
 
+"""
 sql_driver = SqliteDriver("./Database/database.db")
 #sql_driver = MSSQLDriver("localhost", "Gameshow")
 sql_reader = QuestionSQLReader(sql_driver)
@@ -19,7 +21,7 @@ scores = [Score("peter", 900), Score("brammen", 1500), Score("chris", 1500), Sco
 game = Game(questions, scores)
 
 router = EndpointRouter()
-router.add("Question", QuestionHandler(game))
+router.add("Question", NextQuestionHandler(game))
 router.add("Score", ScoreHandler(game))
 router.add("Round", RoundHandler(game))
 
@@ -30,3 +32,22 @@ socket = WebsocketHandler(router)
 print("listening...")
 asyncio.run(socket.listen(address, port))
 
+"""
+
+address = "localhost"
+port = 8123
+game = Game()
+sql_driver = SqliteDriver("./Database/database.db")
+question_reader = QuestionSQLReader(sql_driver)
+router = EndpointRouter()
+sender = MessageSender()
+receiver = MessageReceiver(router)
+listener = WebsocketListener(receiver)
+
+game.questions = question_reader.read()
+router.add("Question", QuestionHandler(game, sender))
+router.add("NextQuestion", NextQuestionHandler(game, sender))
+router.add("Init", PlayerHandler(game, sender))
+
+print("listening...")
+asyncio.run(listener.listen(address, port))

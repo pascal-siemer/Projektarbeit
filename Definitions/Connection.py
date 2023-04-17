@@ -7,4 +7,4 @@ from Definitions.Player import Player
 @dataclass
 class Connection:
     websocket: Any
-    player: Player
+    player: Player | None

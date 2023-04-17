@@ -1,6 +1,8 @@
 from dataclasses import dataclass
+
+from Definitions.Connection import Connection
+from Definitions.Player import Player
 from Definitions.Question import Question
-from Definitions.Score import Score
 
 
 #add round_started: bool
@@ -8,10 +10,12 @@ from Definitions.Score import Score
 @dataclass
 class Game:
     questions: list[Question]
+    players: list[Player]
+    connections: list[Connection]
     question_index: int
-    scores: list[Score]
 
-    def __init__(self, questions: list[Question], scores: list[Score]):
-        self.questions = questions
-        self.question_index = 0
-        self.scores = scores
+    def __init__(self):
+        self.questions = []
+        self.question_index = -1
+        self.players = []
+        self.connections = []
