@@ -1,12 +1,11 @@
 from Definitions.Game import Game
 from Definitions.Score import Score
-from Endpoints.EndpointRouter import EndpointRouter
-from Endpoints.QuestionHandler import QuestionHandler
-from Endpoints.RoundHandler import RoundHandler
-from Endpoints.ScoreHandler import ScoreHandler
-from SQL.Driver.MssqlDriver import MSSQLDriver
-from SQL.Reader.QuestionSQLReader import QuestionSQLReader
-from SQL.Driver.SqliteDriver import SqliteDriver
+from Messaging.Endpoints.EndpointRouter import EndpointRouter
+from Messaging.Endpoints.QuestionHandler import QuestionHandler
+from Messaging.Endpoints.RoundHandler import RoundHandler
+from Messaging.Endpoints.ScoreHandler import ScoreHandler
+from Database.Reader.QuestionSQLReader import QuestionSQLReader
+from Database.Driver.SqliteDriver import SqliteDriver
 from WebsocketHandler import WebsocketHandler
 import asyncio
 

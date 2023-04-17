@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from SQL.Driver.MssqlDriver import MSSQLDriver
+from Database.Driver.MssqlDriver import MSSQLDriver
 
 
 class ISqlReader(ABC):

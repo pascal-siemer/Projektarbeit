@@ -1,6 +1,6 @@
 import asyncio
 import websockets
-from Endpoints.EndpointRouter import EndpointRouter
+from Messaging.Endpoints.EndpointRouter import EndpointRouter
 from Tools.JsonConverter import JsonConverter
 
 

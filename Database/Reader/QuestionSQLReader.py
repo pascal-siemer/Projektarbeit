@@ -1,6 +1,6 @@
 from Interfaces.ISqlDriver import ISqlDriver
 from Interfaces.ISqlReader import ISqlReader
-from SQL.Mapper.QustionMapper import QuestionMapper
+from Database.Mapper.QustionMapper import QuestionMapper
 
 
 class QuestionSQLReader(ISqlReader):
