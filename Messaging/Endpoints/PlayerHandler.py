@@ -16,17 +16,30 @@ class PlayerHandler(IEndpoint):
 
     async def handle_message(self, connection: Connection, message: Message) -> None:
 
+        #guards
+
+        #if no connection
         if connection is None:
             return
 
+        #if connection already has a player
         if connection.player is not None:
             return
+
+        #if player already has a connection
+        for connection in self.game.connections:
+            if connection.player is None:
+                continue
+            if connection.player.name == message.value:
+                return
+
+        #execution
 
         player = Player(message.value, 0)
         connection.player = player
         self.game.connections.append(connection)
 
-        await self.sender.send_to_all(game.connections, player)
+        await self.sender.send_to_all(self.game.connections, player)
 
 
 

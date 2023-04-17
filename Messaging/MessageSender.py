@@ -9,7 +9,7 @@ class MessageSender:
 
     async def send(self, connection: Connection, message: Message):
         json_of_message = JsonConverter.deserialize(message)
-        connection.websocket.send(json_of_message)
+        await connection.websocket.send(json_of_message)
 
     async def send_to_all(self, connections: list[Connection], message: Message):
         tasks = list()
