@@ -4,6 +4,7 @@ const websocket = new WebSocket(`${url}:${port}`)
 
 const buttonConnect = document.querySelector('#ButtonConnect');
 const buttonQuestions = document.querySelector('#ButtonQuestions');
+const buttonNextQuestions = document.querySelector('#ButtonNextQuestions');
 const buttonScores = document.querySelector('#ButtonScores');
 const inputPlayerName = document.querySelector('#InputPlayerName');
 const inputScores = document.querySelector('#InputScores');
@@ -25,7 +26,15 @@ buttonConnect.onclick = event => {
 }
 
 buttonQuestions.onclick = event => {
-    websocket.send('<<Question>>Question');
+    let message = new Message('Question', '');
+    let json_of_message = JSON.stringify(message);
+    websocket.send(json_of_message);
+}
+
+buttonNextQuestions.onclick = event => {
+    let message = new Message('NextQuestion', '');
+    let json_of_message = JSON.stringify(message);
+    websocket.send(json_of_message);
 }
 
 buttonScores.onclick = event =>{

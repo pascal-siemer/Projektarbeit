@@ -5,6 +5,7 @@ from Definitions.Message import Message
 from Definitions.Player import Player
 from Interfaces.IEndpoint import IEndpoint
 from Messaging.MessageSender import MessageSender
+from Tools.JsonConverter import JsonConverter
 
 
 class PlayerHandler(IEndpoint):
@@ -27,19 +28,21 @@ class PlayerHandler(IEndpoint):
             return
 
         #if player already has a connection
-        for connection in self.game.connections:
-            if connection.player is None:
-                continue
-            if connection.player.name == message.value:
+        for established_connection in self.game.connections:
+            if(established_connection.websocket == connection.websocket):
                 return
+            if established_connection.player.name == message.value:
+                return
+
 
         #execution
 
         player = Player(message.value, 0)
         connection.player = player
         self.game.connections.append(connection)
-
-        await self.sender.send_to_all(self.game.connections, player)
+        json_of_player = JsonConverter.deserialize(player)
+        answer = Message(message.handler, json_of_player)
+        await self.sender.send_to_all(self.game.connections, answer)
 
 
 

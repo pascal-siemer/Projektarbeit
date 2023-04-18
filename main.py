@@ -23,6 +23,7 @@ receiver = MessageReceiver(router)
 listener = WebsocketListener(receiver)
 
 game.questions = question_reader.read()
+game.question_index = 0
 router.add("Question", QuestionHandler(game, sender))
 router.add("NextQuestion", NextQuestionHandler(game, sender))
 router.add("Init", PlayerHandler(game, sender))

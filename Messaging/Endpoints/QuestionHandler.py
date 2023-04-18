@@ -13,6 +13,9 @@ class QuestionHandler(IEndpoint):
         self.sender = sender
 
     async def handle_message(self, connection: Connection, message: Message) -> None:
+        index = self.game.question_index
+        if index < 0:
+            return
         question = self.game.questions[self.game.question_index]
         json_of_question = JsonConverter.deserialize(question)
         answer = Message(message.handler, json_of_question)
