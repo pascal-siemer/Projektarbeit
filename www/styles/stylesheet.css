@@ -5,6 +5,8 @@
     --contentColor: #393E46;
     --accentColor: #00ADB5;
     --textColor: #EEEEEE;
+    --sidebarWidth: max(10%, 200px);
+    --contentWidth: max(50%, 400px);
 }
 
 html, body {
@@ -16,6 +18,7 @@ html, body {
 
 body {
     /*Center all content*/
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,7 +31,7 @@ body {
 
 /* GameShow Element*/
 .content {
-    width: 50%;
+    width: var(--contentWidth);
     background-color: var(--contentColor);
     border-radius: var(--cornerRadius);
     padding: 20px; 
@@ -67,6 +70,21 @@ button {
     border: none;
     border-radius: 5px;
     background-color: var(--accentColor);
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    width: var(--sidebarWidth);
+    height: 100%;
+    background-color: var(--contentColor);
+}
+
+.window {
+    position: fixed;
+    left: var(--sidebarWidth);
+    width: calc(100% - var(--sidebarWidth));
+    height: 100%;
 }
 
 

@@ -7,7 +7,8 @@ class Game {
         this.buttonB = document.querySelector('#buttonB');
         this.buttonC = document.querySelector('#buttonC');
         this.buttonD = document.querySelector('#buttonD');
-        this.indexCorrect = -1;
+        this.scores = document.querySelector('#scores');
+        this.indexCorrect = -1; //entfernen, juckt den client nicht.
     }
 
 }

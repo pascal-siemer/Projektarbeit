@@ -15,6 +15,12 @@ function requestNextQuestions() {
     socket.send(json);
 }
 
+function requestScores() {
+    let message = new Message('Scores');
+    let json = JSON.stringify(message);
+    socket.send(json);
+}
+
 function updateQuestions(question) {
     game.prompt.innerHTML = question.prompt;
     game.buttonA.innerHTML = question.answers[0];
@@ -22,7 +28,15 @@ function updateQuestions(question) {
     game.buttonC.innerHTML = question.answers[2];
     game.buttonD.innerHTML = question.answers[3];
     game.indexCorrect = question.indexCorrect;
-    
+}
+
+function updateScores(scores) {
+    game.scores.innerHTML = '';
+    for (let i = 0; i < scores.length; i++) {
+        innerHTML += '';
+        innerHTML += scores[i];
+        innerHTML += '<br>';
+    }
 }
 
 buttonEvent = (event, button, buttonIndex) => {
@@ -53,10 +67,20 @@ socket.onmessage = event => {
         case 'NextQuestion': 
             updateQuestions(value); 
             break;
+        case 'Scores':
+            updateScores(value);
+            break;
         case 'Init': 
             game.prompt.innerHTML = value; 
             requestQuestions(); 
             break;
+        case 'Round-Start':
+            //send selection
+            //request scores
+            requestNextQuestions();
+
+            break;
+        case 'Round-End':
         default: console.log(value);
     }
 }
