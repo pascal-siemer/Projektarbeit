@@ -3,6 +3,34 @@ const serverPort = 8123;
 const socket = new WebSocket(`ws://${serverAddress}:${serverPort}`);
 const game = new Game();
 
+function registerPlayer() {
+    let message = new Message('Init', 'Pascal');
+    let json = JSON.stringify(message);
+    socket.send(json);
+}
+
+function transmitScores() {
+
+    
+    
+    let scores = game.scores.innerHTML;
+
+    scores.split('<br>')
+          .map(line => line.replace(' ', ''))
+          .map(line => line.split(':'))
+          .flat()
+
+    let message = new Message('Scores', value);
+    let json = JSON.stringify(message);
+    socket.send(json);
+}
+
+function requestStart() {
+    let message = new Message('Round');
+    let json = JSON.stringify(message);
+    socket.send(json);
+}
+
 function requestQuestions() {
     let message = new Message('Question');
     let json = JSON.stringify(message);
@@ -49,16 +77,17 @@ buttonEvent = (event, button, buttonIndex) => {
 
 // Event Listener
 
-socket.onopen = event => {
-    let message = new Message('Init', 'Pascal');
-    let json = JSON.stringify(message);
-    socket.send(json);
+socket.onopen = () => {
+    registerPlayer();
+    requestStart();
 }
 
 socket.onmessage = event => {
     let message = JSON.parse(event.data);
     let handler = message.handler;
     let value = JSON.parse(message.value);
+
+    console.log(`${handler} <- ${value}`);
 
     switch (handler) {
         case 'Question': 
@@ -74,14 +103,15 @@ socket.onmessage = event => {
             game.prompt.innerHTML = value; 
             requestQuestions(); 
             break;
-        case 'Round-Start':
+        case 'Round_Start':
             //send selection
             //request scores
             requestNextQuestions();
-
             break;
-        case 'Round-End':
-        default: console.log(value);
+        case 'Round_End':
+            transmitScores();
+            break;
+        default: break;
     }
 }
 
@@ -89,3 +119,4 @@ game.buttonA.onclick = event => buttonEvent(event, game.buttonA, 0);
 game.buttonB.onclick = event => buttonEvent(event, game.buttonB, 1);
 game.buttonC.onclick = event => buttonEvent(event, game.buttonC, 2);
 game.buttonD.onclick = event => buttonEvent(event, game.buttonD, 3);
+
