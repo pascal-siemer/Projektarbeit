@@ -3,120 +3,135 @@ const serverPort = 8123;
 const socket = new WebSocket(`ws://${serverAddress}:${serverPort}`);
 const game = new Game();
 
-function registerPlayer() {
-    let message = new Message('Init', 'Pascal');
+let indexSelectedAnswer = -1;
+
+// Messaging
+
+function jsonToMessage(json) {
+    let object = JSON.parse(json);
+    let handler = object.handler;
+    let value = JSON.parse(object.value);
+    return new Message(handler, value);
+}
+
+function getUsername() {
+    return new URLSearchParams(window.location.search).get('username')
+}
+
+function send(handler, value='{}') {
+    let message = new Message(handler, value);
     let json = JSON.stringify(message);
     socket.send(json);
 }
 
-function transmitScores() {
+const requestAnswer         = () => send('Answer', indexSelectedAnswer)
+const requestQuestions      = () => send('Question');
+const requestScore          = () => send('Score');
+const sendRegistration      = () => send('Register', getUsername());
+const sendSelection         = () => send('Selection', indexSelectedAnswer);
 
-    
-    
-    let scores = game.scores.innerHTML;
+// Updating UI
 
-    scores.split('<br>')
-          .map(line => line.replace(' ', ''))
-          .map(line => line.split(':'))
-          .flat()
+function resetUI() {
 
-    let message = new Message('Scores', value);
-    let json = JSON.stringify(message);
-    socket.send(json);
-}
-
-function requestStart() {
-    let message = new Message('Round');
-    let json = JSON.stringify(message);
-    socket.send(json);
-}
-
-function requestQuestions() {
-    let message = new Message('Question');
-    let json = JSON.stringify(message);
-    socket.send(json);
-}
-
-function requestNextQuestions() {
-    let message = new Message('NextQuestion');
-    let json = JSON.stringify(message);
-    socket.send(json);
-}
-
-function requestScores() {
-    let message = new Message('Scores');
-    let json = JSON.stringify(message);
-    socket.send(json);
-}
-
-function updateQuestions(question) {
-    game.prompt.innerHTML = question.prompt;
-    game.buttonA.innerHTML = question.answers[0];
-    game.buttonB.innerHTML = question.answers[1];
-    game.buttonC.innerHTML = question.answers[2];
-    game.buttonD.innerHTML = question.answers[3];
-    game.indexCorrect = question.indexCorrect;
-}
-
-function updateScores(scores) {
-    game.scores.innerHTML = '';
-    for (let i = 0; i < scores.length; i++) {
-        innerHTML += '';
-        innerHTML += scores[i];
-        innerHTML += '<br>';
+    for (let button of game.buttons) {
+        button.classList.remove('selected', 'correct', 'incorrect');
     }
 }
 
-buttonEvent = (event, button, buttonIndex) => {
-    button.style.background = game.indexCorrect === buttonIndex
-        ? '#00FF00' 
-        : '#FF0000';
+function selectButton(button) {
+    indexSelectedAnswer = -1
+    let iteratedButton;
+    for (let i = 0; i < game.buttons.length; i++) {
+        iteratedButton = game.buttons[i];
+        iteratedButton.classList.remove('selected', 'correct', 'incorrect');
+        if (button === iteratedButton) {
+            indexSelectedAnswer = i;
+            button.classList.add('selected');
+        }
+    }
 }
 
+function updateQuestions(question) {
+    game.prompt.innerHTML   = question.prompt;
+    let length = Math.min(game.buttons.length, question.answers.length);
+    for(let i = 0; i < length; i++) {
+        game.buttons[i].innerHTML = question.answers[i];
+    }
+}
 
+function updateScores(players) {
+    game.scores.innerHTML = '';
+    for (let player of players) {
+        game.scores.innerHTML += `${player.name}: ${player.score}<br>`;
+    }
+}
+
+function updateSelectionWithAnswer(isAnswerCorrect) {
+    resetUI();
+    if(indexSelectedAnswer < 0 || indexSelectedAnswer >= game.buttons.length) {
+        return;
+    }
+    let selectedButton = game.buttons[indexSelectedAnswer];
+    selectedButton.classList.add(isAnswerCorrect
+        ? 'correct'
+        : 'incorrect');
+}
 
 // Event Listener
 
 socket.onopen = () => {
-    registerPlayer();
-    //requestStart();
+    sendRegistration(); 
 }
+socket.onmessage = event => routeMessage(jsonToMessage(event.data));
 
-socket.onmessage = event => {
-    let message = JSON.parse(event.data);
-    let handler = message.handler;
-    let value = JSON.parse(message.value);
+game.buttonA.onclick = event => selectButton(event.target);
+game.buttonB.onclick = event => selectButton(event.target);
+game.buttonC.onclick = event => selectButton(event.target);
+game.buttonD.onclick = event => selectButton(event.target);
 
-    console.log(`${handler} <- ${value}`);
+function routeMessage(message) {
 
-    switch (handler) {
+    console.log(`${message.handler} <- ${message.value}`);
+
+    switch (message.handler) {
+        
         case 'Question': 
-            updateQuestions(value); 
+            updateQuestions(message.value);         
             break;
+
         case 'NextQuestion': 
-            updateQuestions(value); 
+            updateQuestions(message.value);
             break;
-        case 'Scores':
-            updateScores(value);
+
+        case 'Scores': 
+            updateScores(message.value);
             break;
-        case 'Init': 
-            game.prompt.innerHTML = value; 
-            requestQuestions(); 
+
+        case 'Register': 
+            updateScores(message.value);
+            requestQuestions();                  
             break;
-        case 'Round_Start':
-            //send selection
-            //request scores
-            requestNextQuestions();
+
+        case 'Round_Start': //send selection //request scores
+            requestQuestions();
+            resetUI();
             break;
+
         case 'Round_End':
-            //transmitScores();
+            sendSelection();
+            requestAnswer();
+            setTimeout(requestScore, 500);
             break;
+
+        case 'Score':
+            updateScores(message.value);
+            break;
+
+        case 'Answer':
+            updateSelectionWithAnswer(message.value);
+            break;
+
         default: break;
     }
 }
-
-game.buttonA.onclick = event => buttonEvent(event, game.buttonA, 0);
-game.buttonB.onclick = event => buttonEvent(event, game.buttonB, 1);
-game.buttonC.onclick = event => buttonEvent(event, game.buttonC, 2);
-game.buttonD.onclick = event => buttonEvent(event, game.buttonD, 3);
-

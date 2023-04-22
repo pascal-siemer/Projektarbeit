@@ -8,7 +8,7 @@ from Messaging.MessageSender import MessageSender
 from Tools.JsonConverter import JsonConverter
 
 
-class PlayerHandler(IEndpoint):
+class RegistrationHandler(IEndpoint):
 
     def __init__(self, game: Game, sender: MessageSender):
         self.game = game
@@ -31,20 +31,26 @@ class PlayerHandler(IEndpoint):
         for established_connection in self.game.connections:
             if(established_connection.websocket == connection.websocket):
                 return
-            if established_connection.player.name == message.value:
-                return
 
 
         #execution
 
-        player = Player(message.value, 0)
+        player = self.get_player(message.value)
+        if player is None:
+            player = Player(message.value, 0)
+            self.game.players.append(player)
+
         connection.player = player
         self.game.connections.append(connection)
-        json_of_player = JsonConverter.deserialize(player)
+        json_of_player = JsonConverter.deserialize(self.game.players)
         answer = Message(message.handler, json_of_player)
         await self.sender.send_to_all(self.game.connections, answer)
 
-
+    def get_player(self, name: str) -> Player | None:
+        for player in self.game.players:
+            if(name == player.name):
+                return player
+        return None
 
 
 

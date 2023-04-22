@@ -4,6 +4,7 @@
     --backgroundColor:#222831;
     --contentColor: #393E46;
     --accentColor: #00ADB5;
+    --selectionColor: #cceff0;
     --textColor: #EEEEEE;
     --sidebarWidth: max(10%, 200px);
     --contentWidth: max(50%, 400px);
@@ -95,4 +96,15 @@ button {
 	height: 100%;
 }
 
+.selected {
+    background-color: var(--selectionColor);
+}
+
+.correct {
+    background-color: #00FF00;
+}
+
+.incorrect {
+    background-color: #FF0000;
+}
 

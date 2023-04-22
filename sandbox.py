@@ -1,8 +1,14 @@
-from Database.Driver.MssqlDriver import MSSQLDriver
-from Database.Mapper.QustionMapper import QuestionMapper
+from Tools.Debouncer import Debouncer
 
-driver = MSSQLDriver("localhost", "Gameshow")
-result = driver.get("SELECT * FROM dbo.TestQuestions", QuestionMapper())
 
-for question in result:
-    print(question)
+
+async def doStuff():
+    await asyncio.wait(500)
+
+
+
+debouncer = Debouncer(2000)
+
+
+
+

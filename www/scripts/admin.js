@@ -11,10 +11,12 @@ function Send(handler, value) {
     socket.send(json);
 }
 
-let registerPlayer = () => Send('Init', 'admin');
-let sendStartRound = () => Send('Round_Start', '{}');
-let sendStopRound  = () => Send('Round_End', '{}');
+const sendRegistration      = () => Send('Register', 'admin');
+const sendStartRound        = () => Send('Round_Start', '{}');
+const sendStopRound         = () => Send('Round_End', '{}');
+const requestNextQuestions  = () => Send('NextQuestion', '{}');
 
-socket.onmessage = event => divDisplayMessage.innerHTML = event.data; 
-buttonRoundStart.onclick = () => sendStartRound();
+socket.onopen = () => sendRegistration();
+socket.onmessage = event => divDisplayMessage.innerHTML = JSON.stringify(event.data); 
+buttonRoundStart.onclick = () => {sendStartRound(); requestNextQuestions();}
 buttonRoundStop.onclick = () => sendStopRound();
