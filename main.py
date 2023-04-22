@@ -28,7 +28,8 @@ game.question_index = 0
 router.add("Question", QuestionHandler(game, sender))
 router.add("NextQuestion", NextQuestionHandler(game, sender))
 router.add("Init", PlayerHandler(game, sender))
-router.add("Round", RoundHandler(game, sender))
+router.add("Round_Start", RoundHandler(game, sender))
+router.add("Round_End", RoundHandler(game, sender))
 
 print("listening...")
 asyncio.run(listener.listen(address, port))

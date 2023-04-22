@@ -15,10 +15,13 @@ class RoundHandler(IEndpoint):
         self.sender = sender
 
     #set game.round_started
-    async def handle_message(self, connection: Connection, message: str) -> None:
-        while True:
-            await asyncio.sleep(10)
 
+    async def handle_message(self, connection: Connection, message: Message) -> None:
+        await self.sender.send_to_all(self.game.connections, message)
+
+    async def handle_message_old(self, connection: Connection, message: Message) -> None:
+        while True:
+            await asyncio.sleep(30)
             answer = Message("Round_Start", "{}")
             await self.sender.send_to_all(self.game.connections, answer)
             await asyncio.sleep(10)
@@ -27,3 +30,4 @@ class RoundHandler(IEndpoint):
 
     #while game.round_status: send round stuff
     #async def send
+

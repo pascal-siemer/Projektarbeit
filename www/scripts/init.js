@@ -79,7 +79,7 @@ buttonEvent = (event, button, buttonIndex) => {
 
 socket.onopen = () => {
     registerPlayer();
-    requestStart();
+    //requestStart();
 }
 
 socket.onmessage = event => {
@@ -109,7 +109,7 @@ socket.onmessage = event => {
             requestNextQuestions();
             break;
         case 'Round_End':
-            transmitScores();
+            //transmitScores();
             break;
         default: break;
     }
