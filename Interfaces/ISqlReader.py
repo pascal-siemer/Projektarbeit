@@ -1,11 +1,12 @@
 from abc import ABC, abstractmethod
-from SQL.Driver.MssqlDriver import MSSQLDriver
+
+from Interfaces.ISqlDriver import ISqlDriver
 
 
 class ISqlReader(ABC):
 
     @abstractmethod
-    def __init__(self, driver: MSSQLDriver):
+    def __init__(self, driver: ISqlDriver):
         pass
 
     @abstractmethod

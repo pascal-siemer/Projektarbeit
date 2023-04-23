@@ -1,33 +1,44 @@
-from Definitions.Game import Game
-from Definitions.Score import Score
-from Endpoints.EndpointRouter import EndpointRouter
-from Endpoints.QuestionHandler import QuestionHandler
-from Endpoints.RoundHandler import RoundHandler
-from Endpoints.ScoreHandler import ScoreHandler
-from SQL.Driver.MssqlDriver import MSSQLDriver
-from SQL.Reader.QuestionSQLReader import QuestionSQLReader
-from SQL.Driver.SqliteDriver import SqliteDriver
-from WebsocketHandler import WebsocketHandler
 import asyncio
 
+from Database.Driver.SqliteDriver import SqliteDriver
+from Database.Reader.QuestionSQLReader import QuestionSQLReader
+from Definitions.Game import Game
+from Messaging.Handler.AnswerHandler import AnswerHandler
+from Messaging.MessageRouter import MessageRouter
+from Messaging.Handler.NextQuestionHandler import NextQuestionHandler
+from Messaging.Handler.RegistrationHandler import RegistrationHandler
+from Messaging.Handler.QuestionHandler import QuestionHandler
+from Messaging.Handler.RoundHandler import RoundHandler
+from Messaging.Handler.ScoreHandler import ScoreHandler
+from Messaging.Handler.SelectionHandler import SelectionHandler
+from Messaging.MessageReceiver import MessageReceiver
+from Messaging.MessageSender import MessageSender
+from Messaging.WebsocketListener import WebsocketListener
 
-sql_driver = SqliteDriver("./Database/database.db")
-#sql_driver = MSSQLDriver("localhost", "Gameshow")
-sql_reader = QuestionSQLReader(sql_driver)
-
-questions = sql_reader.read()
-scores = [Score("peter", 900), Score("brammen", 1500), Score("chris", 1500), Score("sep", 600), Score("jay", 1200)]
-game = Game(questions, scores)
-
-router = EndpointRouter()
-router.add("Question", QuestionHandler(game))
-router.add("Score", ScoreHandler(game))
-router.add("Round", RoundHandler(game))
+#setup
 
 address = "localhost"
 port = 8123
-socket = WebsocketHandler(router)
+game = Game()
+sql_driver = SqliteDriver("./Database/database.db")
+question_reader = QuestionSQLReader(sql_driver)
+router = MessageRouter()
+sender = MessageSender()
+receiver = MessageReceiver(router)
+listener = WebsocketListener(receiver)
+
+game.questions = question_reader.read()
+game.question_index = 0
+router.add("Question", QuestionHandler(game, sender))
+router.add("NextQuestion", NextQuestionHandler(game, sender))
+router.add("Register", RegistrationHandler(game, sender))
+router.add("Round_Start", RoundHandler(game, sender))
+router.add("Round_End", RoundHandler(game, sender))
+router.add("Selection", SelectionHandler(game))
+router.add("Score", ScoreHandler(game, sender))
+router.add("Answer", AnswerHandler(game, sender))
+
+#start
 
 print("listening...")
-asyncio.run(socket.listen(address, port))
-
+asyncio.run(listener.listen(address, port))

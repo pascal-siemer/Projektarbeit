@@ -1,19 +1,20 @@
+"""
+Diese Klasse ist auskommentiert,
+da bestimmte Komponenten auf dem System installiert sein müssen,
+damit pyodbc angesprochen werden kann.
+"""
+
+"""
 from typing import Any
-
-from pyodbc import Connection, Cursor, Row
+from pyodbc import Connection
 from pyodbc import connect
-
 from Interfaces.ISqlDataMapper import ISqlDataMapper
-import sqlite3
-
 
 
 class MSSQLDriver:
 
-    """
-    Implementierung des MSSQL-Drivers nach Microsoft-Empfehlung
-    siehe: https://learn.microsoft.com/de-de/sql/connect/python/pyodbc/python-sql-driver-pyodbc?view=sql-server-ver16
-    """
+    #Implementierung des MSSQL-Drivers nach Microsoft-Empfehlung
+    #siehe: https://learn.microsoft.com/de-de/sql/connect/python/pyodbc/python-sql-driver-pyodbc?view=sql-server-ver16
 
     def __init__(self, address: str, database: str):
         connection_parameters = self.create_connection_parameters(address, database)
@@ -31,3 +32,4 @@ class MSSQLDriver:
         with self.connection.cursor() as cursor:
             cursor.execute(query)
             return mapper.map(cursor)
+"""

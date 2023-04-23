@@ -4,7 +4,10 @@
     --backgroundColor:#222831;
     --contentColor: #393E46;
     --accentColor: #00ADB5;
+    --selectionColor: #cceff0;
     --textColor: #EEEEEE;
+    --sidebarWidth: max(10%, 200px);
+    --contentWidth: max(50%, 400px);
 }
 
 html, body {
@@ -16,6 +19,7 @@ html, body {
 
 body {
     /*Center all content*/
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,21 +30,12 @@ body {
     color: var(--textColor);
 }
 
-/* GameShow Element*/
-.content {
-    width: 50%;
-    background-color: var(--contentColor);
-    border-radius: var(--cornerRadius);
-    padding: 20px; 
-}
-
 #question {
     background-color:  var(--accentColor);
     border-radius: 5px;
     padding: 10px;
     color: black;
 }
-
 
 /* Creating Button Grid*/
 #buttonContainer {
@@ -69,4 +64,47 @@ button {
     background-color: var(--accentColor);
 }
 
+/* GameShow Element*/
+.content {
+	margin: auto auto auto auto;
+	position: relative; 
+	top: 50%; 
+	transform: translateY(-50%);
+    width: var(--contentWidth);
+    background-color: var(--contentColor);
+    border-radius: var(--cornerRadius);
+    padding: 20px; 
+}
+
+.sidebar {
+	float: left;
+    width: var(--sidebarWidth);
+    height: 100%;
+    background-color: var(--contentColor);
+	left: 0;
+}
+
+.window {
+	float: right;
+    width: calc(100% - var(--sidebarWidth));
+    height: 100%;
+	left: var(--sidebarWidth);
+}
+
+.container {
+	width: 100%;
+	height: 100%;
+}
+
+.selected {
+    background-color: var(--selectionColor);
+}
+
+.correct {
+    background-color: #00FF00;
+}
+
+.incorrect {
+    background-color: #FF0000;
+}
 

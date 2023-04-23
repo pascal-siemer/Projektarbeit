@@ -19,29 +19,9 @@ class Connection {
         this.quiz = quiz;
     }
 
-    handleOnOpen(event) {
-        let connectedSocket = event.target;
-        let message = "Javascript talking..";
-        connectedSocket.send(message);
-        console.log(message);
-    }
-    
-    handleOnMessage(event) {
-        logObject(event, 'message incoming');
-        let question = JSON.parse(event.data)
-        this.quiz?.updateQuiz(question);
-    }
-
-    handleOnClose(event) {
-        logObject(event, 'connection closed');
-    }
-
-    handleOnError(event) {
-        logObject(event, 'ERROR');
-    }
 
     requestQuestion() {
-        return this.websocket.send("<<GET>>");
+        return this.websocket.send("<<Question>>");
     }
 
 
@@ -52,4 +32,28 @@ class Connection {
             }
         }
     }
+
+    // event handler
+
+    handleOnOpen = event => {
+        let connectedSocket = event.target;
+        let message = "<<Question>>";
+        connectedSocket.send(message);
+        console.log(message);
+    }
+    
+    handleOnMessage = event => {
+        logObject(event, 'message incoming');
+        let question = JSON.parse(event.data)
+        this.quiz?.updateQuiz(question);
+    }
+
+    handleOnClose = event => {
+        logObject(event, 'connection closed');
+    }
+
+    handleOnError = event => {
+        logObject(event, 'ERROR');
+    }
+
 }
