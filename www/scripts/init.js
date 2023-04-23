@@ -113,7 +113,7 @@ function routeMessage(message) {
             requestQuestions();                  
             break;
 
-        case 'Round_Start': //send selection //request scores
+        case 'Round_Start':
             requestQuestions();
             resetUI();
             break;

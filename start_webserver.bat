@@ -1,0 +1,1 @@
+cmd /k "python ./www/ -m http.server 8000"

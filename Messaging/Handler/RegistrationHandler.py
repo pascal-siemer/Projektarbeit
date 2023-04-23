@@ -25,7 +25,7 @@ class RegistrationHandler(IMessageHandler):
             if established_connection.websocket == connection.websocket:
                 return
 
-        player = self.get_player(message.value)
+        player = self.__get_player(message.value)
         if player is None:
             player = Player(message.value, 0)
             self.__game.players.append(player)
@@ -36,7 +36,7 @@ class RegistrationHandler(IMessageHandler):
         answer = Message(message.handler, json_of_player)
         await self.__sender.send_to_all(self.__game.connections, answer)
 
-    def get_player(self, name: str) -> Player | None:
+    def __get_player(self, name: str) -> Player | None:
         for player in self.__game.players:
             if(name == player.name):
                 return player

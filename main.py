@@ -1,17 +1,17 @@
 import asyncio
 
 from Database.Driver.SqliteDriver import SqliteDriver
-from Database.Reader.QuestionSQLReader import QuestionSQLReader
+from Database.Reader.QuestionSqlReader import QuestionSqlReader
 from Definitions.Game import Game
 from Messaging.Handler.AnswerHandler import AnswerHandler
-from Messaging.MessageRouter import MessageRouter
 from Messaging.Handler.NextQuestionHandler import NextQuestionHandler
-from Messaging.Handler.RegistrationHandler import RegistrationHandler
 from Messaging.Handler.QuestionHandler import QuestionHandler
+from Messaging.Handler.RegistrationHandler import RegistrationHandler
 from Messaging.Handler.RoundHandler import RoundHandler
 from Messaging.Handler.ScoreHandler import ScoreHandler
 from Messaging.Handler.SelectionHandler import SelectionHandler
 from Messaging.MessageReceiver import MessageReceiver
+from Messaging.MessageRouter import MessageRouter
 from Messaging.MessageSender import MessageSender
 from Messaging.WebsocketListener import WebsocketListener
 
@@ -21,7 +21,7 @@ address = "localhost"
 port = 8123
 game = Game()
 sql_driver = SqliteDriver("./Database/database.db")
-question_reader = QuestionSQLReader(sql_driver)
+question_reader = QuestionSqlReader(sql_driver)
 router = MessageRouter()
 sender = MessageSender()
 receiver = MessageReceiver(router)

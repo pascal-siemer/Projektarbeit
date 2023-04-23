@@ -1,11 +1,12 @@
+from Database.Mapper.QustionMapper import QuestionMapper
+from Definitions.Question import Question
 from Interfaces.ISqlDriver import ISqlDriver
 from Interfaces.ISqlReader import ISqlReader
-from Database.Mapper.QustionMapper import QuestionMapper
 
 
-class QuestionSQLReader(ISqlReader):
+class QuestionSqlReader(ISqlReader):
 
-    query = """
+    __query = """
             select 
                 [ID],
                 [Prompt],
@@ -21,6 +22,6 @@ class QuestionSQLReader(ISqlReader):
     def __init__(self, driver: ISqlDriver):
         self.__driver = driver
 
-    def read(self):
-        return self.__driver.get(self.query, QuestionMapper())
+    def read(self) -> list[Question]:
+        return self.__driver.get(self.__query, QuestionMapper())
 

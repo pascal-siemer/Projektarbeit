@@ -8,8 +8,8 @@ class MessageRouter:
     def __init__(self):
         self.__handler = dict()
 
-    def add(self, identifier: str, endpoint: IMessageHandler) -> None:
-        self.__handler[identifier] = endpoint
+    def add(self, identifier: str, handler: IMessageHandler) -> None:
+        self.__handler[identifier] = handler
 
     async def route(self, connection: Connection, message: Message) -> None:
         endpoint = self.__handler[message.handler]
