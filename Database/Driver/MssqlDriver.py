@@ -1,4 +1,10 @@
 """
+Diese Klasse ist auskommentiert,
+da bestimmte Komponenten auf dem System installiert sein müssen,
+damit pyodbc angesprochen werden kann.
+"""
+
+"""
 from typing import Any
 from pyodbc import Connection
 from pyodbc import connect

@@ -3,18 +3,17 @@ import asyncio
 from Database.Driver.SqliteDriver import SqliteDriver
 from Database.Reader.QuestionSQLReader import QuestionSQLReader
 from Definitions.Game import Game
-from Messaging.Endpoints.AnswerHandler import AnswerHandler
-from Messaging.Endpoints.EndpointRouter import EndpointRouter
-from Messaging.Endpoints.NextQuestionHandler import NextQuestionHandler
-from Messaging.Endpoints.RegistrationHandler import RegistrationHandler
-from Messaging.Endpoints.QuestionHandler import QuestionHandler
-from Messaging.Endpoints.RoundHandler import RoundHandler
-from Messaging.Endpoints.ScoreHandler import ScoreHandler
-from Messaging.Endpoints.SelectionHandler import SelectionHandler
+from Messaging.Handler.AnswerHandler import AnswerHandler
+from Messaging.MessageRouter import MessageRouter
+from Messaging.Handler.NextQuestionHandler import NextQuestionHandler
+from Messaging.Handler.RegistrationHandler import RegistrationHandler
+from Messaging.Handler.QuestionHandler import QuestionHandler
+from Messaging.Handler.RoundHandler import RoundHandler
+from Messaging.Handler.ScoreHandler import ScoreHandler
+from Messaging.Handler.SelectionHandler import SelectionHandler
 from Messaging.MessageReceiver import MessageReceiver
 from Messaging.MessageSender import MessageSender
 from Messaging.WebsocketListener import WebsocketListener
-from Tools.Debouncer import Debouncer
 
 #setup
 
@@ -23,7 +22,7 @@ port = 8123
 game = Game()
 sql_driver = SqliteDriver("./Database/database.db")
 question_reader = QuestionSQLReader(sql_driver)
-router = EndpointRouter()
+router = MessageRouter()
 sender = MessageSender()
 receiver = MessageReceiver(router)
 listener = WebsocketListener(receiver)

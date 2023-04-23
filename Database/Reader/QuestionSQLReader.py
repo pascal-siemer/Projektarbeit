@@ -15,12 +15,12 @@ class QuestionSQLReader(ISqlReader):
                 [Answer3],
                 [IndexCorrect]
             from
-                [TestQuestions]
+                [Questions]
             """
 
     def __init__(self, driver: ISqlDriver):
-        self.driver = driver
+        self.__driver = driver
 
     def read(self):
-        return self.driver.get(self.query, QuestionMapper())
+        return self.__driver.get(self.query, QuestionMapper())
 

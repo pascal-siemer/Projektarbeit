@@ -5,7 +5,7 @@ from Definitions.Connection import Connection
 from Definitions.Message import Message
 
 
-class IEndpoint(ABC):
+class IMessageHandler(ABC):
 
     @abstractmethod
     async def handle_message(self, connection: Connection, message: Message) -> None:

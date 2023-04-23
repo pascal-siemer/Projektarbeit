@@ -3,13 +3,13 @@ import websockets
 
 from Definitions.Connection import Connection
 from Definitions.Message import Message
-from Messaging.Endpoints.EndpointRouter import EndpointRouter
+from Messaging.MessageRouter import MessageRouter
 from Tools.JsonConverter import JsonConverter
 
 
 class WebsocketHandler:
 
-    def __init__(self, router: EndpointRouter):
+    def __init__(self, router: MessageRouter):
         self.router = router
         self.clients = set()
 
