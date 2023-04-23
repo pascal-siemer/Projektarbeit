@@ -9,6 +9,11 @@ from Tools.JsonConverter import JsonConverter
 
 class RegistrationHandler(IMessageHandler):
 
+    """
+    Fügt neue Connections und Player zu game.connections hinzu.
+    Sendet: Liste mit allen Playern aus game.players
+    """
+
     def __init__(self, game: Game, sender: MessageSender):
         self.__game = game
         self.__sender = sender
@@ -32,8 +37,9 @@ class RegistrationHandler(IMessageHandler):
 
         connection.player = player
         self.__game.connections.append(connection)
-        json_of_player = JsonConverter.deserialize(self.__game.players)
-        answer = Message(message.handler, json_of_player)
+
+        json_of_players = JsonConverter.deserialize(self.__game.players)
+        answer = Message(message.handler, json_of_players)
         await self.__sender.send_to_all(self.__game.connections, answer)
 
     def __get_player(self, name: str) -> Player | None:

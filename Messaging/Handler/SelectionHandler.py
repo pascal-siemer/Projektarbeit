@@ -7,6 +7,11 @@ from Interfaces.IMessageHandler import IMessageHandler
 
 class SelectionHandler(IMessageHandler):
 
+    """
+    Nimmt die vom Spieler ausgewählte Antwort (via Index) an
+    und erhöht den Score des passenden players um 1, wenn die Antwort richtig ist.
+    """
+
     def __init__(self, game: Game):
         self.__game = game
 

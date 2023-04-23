@@ -8,6 +8,10 @@ from Tools.JsonConverter import JsonConverter
 
 class ScoreHandler(IMessageHandler):
 
+    """
+    gibt die Player-Liste aus self.game an alle Websockets aus.
+    """
+
     def __init__(self, game: Game, sender: MessageSender):
         self.__game = game
         self.__sender = sender

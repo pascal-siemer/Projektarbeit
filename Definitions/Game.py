@@ -5,8 +5,6 @@ from Definitions.Player import Player
 from Definitions.Question import Question
 
 
-#add round_started: bool
-
 @dataclass
 class Game:
     questions: list[Question]

@@ -8,6 +8,10 @@ from Tools.JsonConverter import JsonConverter
 
 class AnswerHandler(IMessageHandler):
 
+    """
+    AnswerHandler: Nimmt einen Antwort-Index an und gibt zurück, ob die Antwort richtig ist.
+    """
+
     def __init__(self, game: Game, sender: MessageSender):
         self.__game = game
         self.__sender = sender

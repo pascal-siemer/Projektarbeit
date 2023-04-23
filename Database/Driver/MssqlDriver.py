@@ -2,6 +2,7 @@
 Diese Klasse ist auskommentiert,
 da bestimmte Komponenten auf dem System installiert sein müssen,
 damit pyodbc angesprochen werden kann.
+pyodbc muss dazu wieder dem Projekt hinzugefügt werden.
 """
 
 """

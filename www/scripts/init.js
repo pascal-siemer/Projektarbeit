@@ -90,6 +90,8 @@ game.buttonB.onclick = event => selectButton(event.target);
 game.buttonC.onclick = event => selectButton(event.target);
 game.buttonD.onclick = event => selectButton(event.target);
 
+// Routing
+
 function routeMessage(message) {
 
     console.log(`${message.handler} <- ${message.value}`);

@@ -7,6 +7,10 @@ from Messaging.MessageSender import MessageSender
 
 class RoundHandler(IMessageHandler):
 
+    """
+    leitet Nachrichten zum Runden-Status an alle weiter.
+    """
+
     def __init__(self, game: Game, sender: MessageSender):
         self.__game = game
         self.__sender = sender

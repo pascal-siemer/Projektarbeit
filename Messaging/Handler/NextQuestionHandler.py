@@ -8,6 +8,10 @@ from Tools.JsonConverter import JsonConverter
 
 class NextQuestionHandler(IMessageHandler):
 
+    """
+    Gibt das nächste Question-Objekt aus, indem self.game.question_index erhöht wird.
+    """
+
     def __init__(self, game: Game, sender: MessageSender):
         self.__game = game
         self.__sender = sender
