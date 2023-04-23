@@ -18,3 +18,5 @@ Das WebQuiz verwendet die Ports 8000 (Web-Server) und 8123 (Quiz-Server)
 
 url: `http://localhost:8000/`
 
+Das Admin-Panel muss offen sein, damit die Runden des Quiz gesteuert werden können.<br>
+Das Quiz selbst wird aufgerufen, indem ein Username eingegeben wird und dann "connect" gedrückt wird.

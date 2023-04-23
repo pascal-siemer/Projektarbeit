@@ -1,5 +1,9 @@
 # Projektarbeit
 
+Alle relevanten Informationen finden Sie in how_to.md oder im Ordner Documentation.<br>
+<br>
+Im folgenden wird die Aufgabenstellung wiedergegeben.
+
 ## Beschreibung
 In den nächsten 4 Wochen sollen Sie ein Projekt in Python umsetzen. Das Projekt ersetzt eine Klasur. Das Thema ist prinzipiell frei wählbar. Sie können eine Website erstellen, eine Datenanlyse erstellen, eine Website scrapen (ACHTUNG: Bitte nur dafür vorgesehene Seiten scrapen! Kommen Sie im Zweifel auf mich zu!), ein Rest-Service implementieren, eine Datenanalyse durchführen, eine Mobile-App erstellen, usw.
 
